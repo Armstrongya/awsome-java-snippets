@@ -1,7 +1,9 @@
 package com.zangxixi.sourcecode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,7 +44,11 @@ public class ReadJavaSourceCode {
         /** 基于CopyOnWriteArrayList, 线程安全 **/
         Set<Integer> cowArraySet = new CopyOnWriteArraySet<Integer>();//done, 2016-04-27
 
-        /**  **/
+        /** 基于数组和单向链表实现的, 代码看着挺不错的 **/
+        Map<String, Integer> hashMap = new HashMap<String, Integer>();
+
+        /** 基于数组和双向链表实现的, 跟HashMap的存储结构很像, 不过Entry都是双向链表, 插入的元素按顺序连起来了 **/
+        Map<String, Integer> linkedHashMap = new LinkedHashMap<String, Integer>();
 
         /** treeMap 用的红黑树来维护排序 **/
         Map<String, Integer> treeMap = new TreeMap<String, Integer>();//half done
