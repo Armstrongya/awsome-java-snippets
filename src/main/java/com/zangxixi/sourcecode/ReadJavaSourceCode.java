@@ -13,6 +13,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 /**
  * 在这里做一个备注, 标记一下我看过的 JDK 或其他 第三方类库的源码
@@ -52,6 +53,11 @@ public class ReadJavaSourceCode {
 
         /** treeMap 用的红黑树来维护排序 **/
         Map<String, Integer> treeMap = new TreeMap<String, Integer>();//half done
+    }
+
+    //JUC并发包源码
+    public void readJdkConcurrencyCode() {
+        class aqs extends AbstractQueuedSynchronizer {}
     }
 
 }
