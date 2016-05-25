@@ -56,8 +56,13 @@ public class ReadJavaSourceCode {
     }
 
     //JUC并发包源码
+    /** AbstractQueuedSynchronizer 这个框架木有看懂, 看了网上的解读文章才有了一些认识, @TODO 后面要再过头来看一遍
+     * http://www.infoq.com/cn/articles/jdk1.8-abstractqueuedsynchronizer 很赞的两篇分析文章
+     * http://www.infoq.com/cn/articles/java8-abstractqueuedsynchronizer
+     * **/
     public void readJdkConcurrencyCode() {
         class aqs extends AbstractQueuedSynchronizer {}
     }
+
 
 }
