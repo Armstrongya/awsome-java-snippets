@@ -11,8 +11,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.CompletionService;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 /**
@@ -56,12 +60,38 @@ public class ReadJavaSourceCode {
     }
 
     //JUC并发包源码
-    /** AbstractQueuedSynchronizer 这个框架木有看懂, 看了网上的解读文章才有了一些认识, @TODO 后面要再过头来看一遍
-     * http://www.infoq.com/cn/articles/jdk1.8-abstractqueuedsynchronizer 很赞的两篇分析文章
-     * http://www.infoq.com/cn/articles/java8-abstractqueuedsynchronizer
-     * **/
     public void readJdkConcurrencyCode() {
+        /** AbstractQueuedSynchronizer 这个框架木有看懂, 看了网上的解读文章才有了一些认识, @TODO 后面要再过头来看一遍
+         * http://www.infoq.com/cn/articles/jdk1.8-abstractqueuedsynchronizer 很赞的两篇分析文章
+         * http://www.infoq.com/cn/articles/java8-abstractqueuedsynchronizer
+         * **/
         class aqs extends AbstractQueuedSynchronizer {}
+
+        /** 线程池的参数配置参考这篇文章, <a href="http://www.infoq.com/cn/articles/java-threadPool">JAVA线程池的分析和使用</a>
+         * 不同线程池实现的一个重要区别就是任务阻塞队列的选型, ArrayBlockingQueue, LinkedBlockingQueue, SynchronousQueue, PriorityBlockingQueue
+         * 任务性质不同的任务可以用不同规模的线程池分开处理:
+         * 1) CPU密集型任务配置尽可能小的线程，如配置 Ncpu+1个线程的线程池;
+         * 2) IO密集型任务则由于线程并不是一直在执行任务，则配置尽可能多的线程，如 2*Ncpu;
+         * 3) 混合型的任务，如果可以拆分，则将其拆分成一个CPU密集型任务和一个IO密集型任务**/
+
+        /** 像线程的缓存池一样, 适用于大量短时的任务, 无界能自动回收, 有可复用的线程就继续复用, 没有就创建新的线程, 线程idle 超过60秒就kill掉 **/
+        ExecutorService cachedThreadPoolService = Executors.newCachedThreadPool();
+
+        /** 确保最多只有一个线程在执行, 线程出现异常后会新创建一个 **/
+        ExecutorService singleThreadservice = Executors.newSingleThreadExecutor();
+
+        /** 固定大小的线程池 **/
+        ExecutorService fixedThreadPoolService = Executors.newFixedThreadPool(3);
+
+        /** 支持任务定时调度的线程池 **/
+        ExecutorService scheduledThreadPoolService = Executors.newScheduledThreadPool(3);
+
+        /** CompletionService和ExecutorService的最大区别是前者按照线程完成任务的先后顺序来获取结果的, 先完成的先取出;
+         * 不像后者按提交任务顺序获取结果, 如果有一个任务未执行完, 哪怕后面有其他任务完成了也得等待, 阻塞时间相对较长
+         * 用QueueingFuture包装了一下future task, 每个任务执行完毕就会添加到 BlockingQueue 中**/
+        CompletionService<String> completionService = new ExecutorCompletionService<String>(fixedThreadPoolService);//把正常的线程池又包了一层
+
+        /** 阻塞队列 BlockingQueue 可以参考这篇文章 <a href="http://www.infoq.com/cn/articles/java-blocking-queue">Java中的阻塞队列</a> **/
     }
 
 
