@@ -9,6 +9,11 @@ public class App
     public static void main( String[] args )
     {
         System.out.println("Hello World!");
+        String m = "";
+        int x = m.toCharArray().length;
+        System.out.println(m.length());
+
+
         long beginTs = System.currentTimeMillis();
         long result = fib(50);
         long endTs = System.currentTimeMillis();

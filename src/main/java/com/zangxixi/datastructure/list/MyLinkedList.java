@@ -5,5 +5,5 @@ package com.zangxixi.datastructure.list;
  * Created by zxx on 16/4/10.
  */
 public class MyLinkedList {
-    
+
 }
