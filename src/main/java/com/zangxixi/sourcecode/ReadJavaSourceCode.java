@@ -13,6 +13,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.ExecutorCompletionService;
@@ -53,13 +54,16 @@ public class ReadJavaSourceCode {
         /** 基于数组和单向链表实现的, 代码看着挺不错的 **/
         Map<String, Integer> hashMap = new HashMap<String, Integer>();
 
-        Map<String, Integer> concurrentHashMap = new ConcurrentHashMap<String, Integer>();
+        ConcurrentHashMap<String, Integer> concurrentHashMap = new ConcurrentHashMap<String, Integer>();
 
         /** 基于数组和双向链表实现的, 跟HashMap的存储结构很像, 不过Entry都是双向链表, 插入的元素按顺序连起来了 **/
         Map<String, Integer> linkedHashMap = new LinkedHashMap<String, Integer>();
 
         /** treeMap 用的红黑树来维护排序 **/
-        Map<String, Integer> treeMap = new TreeMap<String, Integer>();//half done
+        TreeMap<String, Integer> treeMap = new TreeMap<String, Integer>();//half done
+
+        /** 跳表实现的 **/
+        ConcurrentSkipListMap<String, Integer> skipMap = new ConcurrentSkipListMap<String, Integer>();
     }
 
     //JUC并发包源码
