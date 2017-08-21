@@ -1,7 +1,23 @@
 package com.zangxixi.sourcecode;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.concurrent.CompletionService;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 /**
@@ -41,12 +57,17 @@ public class ReadJavaSourceCode {
 
         /** 基于分段锁实现的, 默认包含16个segment, 相当于并发度是16, 每个segement内部又是用ReentrantLock来加锁的HashMap**/
         Map<String, Integer> concurrentHashMap = new ConcurrentHashMap<String, Integer>();
+        //不一样的方法api
+        ConcurrentHashMap<String, Integer> concurrentHashMap = new ConcurrentHashMap<String, Integer>();
 
         /** 基于数组和双向链表实现的, 跟HashMap的存储结构很像, 不过Entry都是双向链表, 插入的元素按顺序连起来了 **/
         Map<String, Integer> linkedHashMap = new LinkedHashMap<String, Integer>();
 
         /** treeMap 用的红黑树来维护排序 **/
-        Map<String, Integer> treeMap = new TreeMap<String, Integer>();//half done
+        TreeMap<String, Integer> treeMap = new TreeMap<String, Integer>();//half done
+
+        /** 跳表实现的 **/
+        ConcurrentSkipListMap<String, Integer> skipMap = new ConcurrentSkipListMap<String, Integer>();
     }
 
     //JUC并发包源码
@@ -59,7 +80,7 @@ public class ReadJavaSourceCode {
 
         /** 线程池的参数配置参考这篇文章, <a href="http://www.infoq.com/cn/articles/java-threadPool">JAVA线程池的分析和使用</a>
          * 不同线程池实现的一个重要区别就是任务阻塞队列的选型, ArrayBlockingQueue, LinkedBlockingQueue, SynchronousQueue, PriorityBlockingQueue
-         * 任务性质不同的任务可以用不同规模的线程池分开处理:
+         * 性质不同的任务可以用不同规模的线程池分开处理:
          * 1) CPU密集型任务配置尽可能小的线程，如配置 Ncpu+1个线程的线程池;
          * 2) IO密集型任务则由于线程并不是一直在执行任务，则配置尽可能多的线程，如 2*Ncpu;
          * 3) 混合型的任务，如果可以拆分，则将其拆分成一个CPU密集型任务和一个IO密集型任务**/
