@@ -1,5 +1,9 @@
 package com.zangxixi;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Stack;
+
 /**
  * Hello world!
  *
@@ -12,6 +16,9 @@ public class App
         String m = "";
         int x = m.toCharArray().length;
         System.out.println(m.length());
+        LinkedHashMap hashMap = new LinkedHashMap();
+        LinkedList<Integer> ll = new LinkedList<Integer>();
+        Stack<String> stack = new Stack<String>();
 
 
         long beginTs = System.currentTimeMillis();
