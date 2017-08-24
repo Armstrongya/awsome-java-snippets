@@ -1,23 +1,7 @@
 package com.zangxixi.sourcecode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.concurrent.CompletionService;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.concurrent.ExecutorCompletionService;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.*;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 /**
@@ -58,7 +42,7 @@ public class ReadJavaSourceCode {
         /** 基于分段锁实现的, 默认包含16个segment, 相当于并发度是16, 每个segement内部又是用ReentrantLock来加锁的HashMap**/
         Map<String, Integer> concurrentHashMap = new ConcurrentHashMap<String, Integer>();
         //不一样的方法api
-        ConcurrentHashMap<String, Integer> concurrentHashMap = new ConcurrentHashMap<String, Integer>();
+        ConcurrentHashMap<String, Integer> concurrHashMap = new ConcurrentHashMap<String, Integer>();
 
         /** 基于数组和双向链表实现的, 跟HashMap的存储结构很像, 不过Entry都是双向链表, 插入的元素按顺序连起来了 **/
         Map<String, Integer> linkedHashMap = new LinkedHashMap<String, Integer>();
